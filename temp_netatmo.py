@@ -3,6 +3,7 @@ import time
 import json
 import variables
 
+
 data = dict(grant_type = 'password', client_id = variables.netatmo_client_id,
         client_secret = variables.netatmo_client_secret,
         username = variables.netatmo_username, password = variables.netatmo_password,
