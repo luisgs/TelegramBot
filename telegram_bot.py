@@ -26,7 +26,7 @@ def handle(msg):
     chat_id = msg['chat']['id']
     command = msg['text']
 
-    print('Got command: %s' % command)
+    logging.INFO('Got command: %s' % command)
 
     if command == '/roll':
         bot.sendMessage(chat_id, random.randint(1,6))
@@ -42,15 +42,18 @@ def handle(msg):
         else:
             bot.sendMessage(chat_id, "RPI's sensors are not responding!")
             logging.error("RPI's sensors are not responding.")
+
+
     else:
         bot.sendMessage(chat_id, "Sorry, I did not quite understand...")
 
 bot = telepot.Bot(variables.token_bot_api)
 
 
-bot.sendMessage("Hi there! Im all awake!")
+# Welcome message! we just started up!
+bot.sendMessage(variables.bot_chat_id, "Hi there! Im all awake!")
 MessageLoop(bot, handle).run_as_thread()
-logging.debug('I am listening ...')
+logging.info('I am listening ...')
 
 while 1:
     time.sleep(10)
