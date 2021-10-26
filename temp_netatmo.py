@@ -15,10 +15,18 @@ resp = requests.post('https://api.netatmo.com/oauth2/token', data=data,
 if resp.status_code == 200:
     token = resp.json()
     token['expiry'] = int(time.time()) + token['expires_in']
-    print(token['access_token'])
+    print("TOKEN: " + token['access_token'])
     resp = requests.get('https://api.netatmo.com/api/homesdata?access_token=' +
                             token['access_token'], verify=False)
     data = resp.json()
     print(json.dumps(data))
+else:
+    print("There is an error")
+
+if resp.status_code == 200:
+    netatmo_headers = {'accept': 'application/json', 'Authorization' : 'Bearer {}'.format(token['access_token'])}
+    params = {'home_id' : variables.netatmo_home_id}
+    temp_int = requests.get('https://api.netatmo.com/api/homestatus', headers=netatmo_headers, params=params, verify=False).json()
+    room_temp = temp_int['body']['home']['rooms'][0]['therm_measured_temperature']
 else:
     print("There is an error")
