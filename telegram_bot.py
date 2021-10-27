@@ -15,7 +15,7 @@ import variables
 error_import = False
 try:
     error_import = True
-    from humidity import temp
+    from humidity import return_ALL_DHT_temp_humid
 except (ModuleNotFoundError, ImportError) as error:
     logging.exception("Import Adafruit_DHT has failed! %s", error)
 
@@ -37,21 +37,24 @@ def handle(msg):
     elif command == '/time':
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
     elif command == '/temp':
-        bot.sendMessage(chat_id, "Here you have your temps and humidity values!")
+        output_message = "Here you have your temps and humidity values!\n"
         # RPis temps
         if not error_import:
-            list_temp = temp()
+            list_temp = return_ALL_DHT_temp_humid()
             temp_1="Sensor 1: {0:0.1f}*C%".format(list_temp[0][0])
             temp_2="Sensor 2: {0:0.1f}*C%".format(list_temp[1][0])
-            bot.sendMessage(chat_id, temp_1)
-            bot.sendMessage(chat_id, temp_2)
+            output_message += temp_1 + "\n"
+            output_message += temp_2 + "\n"
+            #bot.sendMessage(chat_id, temp)
         else:
-            bot.sendMessage(chat_id, "RPI's sensors are not responding!")
+            #bot.sendMessage(chat_id, "RPI's sensors are not responding!")
+            output_message += "RPI's sensors are not responding!\n"
             logging.info("RPI's sensors are not responding.")
 
         # Netatmo temps!
-        bot.sendMessage(chat_id, "NETATMO: " + str(temp_netatmo.netatmo_room_temp()))
-
+        output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp())
+        # send message outthere
+        bot.sendMessage(chat_id, output_message)
     else:
         bot.sendMessage(chat_id, "Sorry, I did not quite understand...")
 
