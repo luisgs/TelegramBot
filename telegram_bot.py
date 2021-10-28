@@ -23,9 +23,52 @@ import temp_netatmo
 
 
 """
+    TELEGRAM BoT (powered by Telebot)
 """
 
+"""
+    Definition of our MESSAGES
+"""
+command_not_found = ['This command does not exist!']
+command_under_maintenance = ['This command is still under some developtment', 'Command not yet fully operational!']
 
+"""
+    Definition of all our commands
+"""
+# /temp returns DHT and Netatmo temperature values.
+def command_temp():
+    output_message = "Here you have your temps and humidity values!\n"
+    # RPis temps
+    if not error_import:
+        list_temp = return_ALL_DHT_temp_humid()
+        temp_1="Sensor 1: {0:0.1f}*C%".format(list_temp[0][0])
+        temp_2="Sensor 2: {0:0.1f}*C%".format(list_temp[1][0])
+        output_message += temp_1 + "\n"
+        output_message += temp_2 + "\n"
+        #bot.sendMessage(chat_id, temp)
+    else:
+        #bot.sendMessage(chat_id, "RPI's sensors are not responding!")
+        output_message += "RPI's sensors are not responding!\n"
+        logging.info("RPI's sensors are not responding.")
+
+    # Netatmo temps!
+    output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp())
+    # send message outthere
+    return output_message
+
+# /whereis return GPS location of a person. person ID is hard coded
+def command_whereis():
+    output_message = "Here are they:\n"
+    return random.choice(command_under_maintenance)
+
+# /takepic sends a pic taken from our webcamera
+def command_takepic():
+    return random.choice(command_under_maintenance)
+
+"""
+    Handle function!
+"""
+# handle. finds and execute a command msg from client.
 def handle(msg):
     chat_id = msg['chat']['id']
     command = msg['text']
@@ -36,25 +79,12 @@ def handle(msg):
         bot.sendMessage(chat_id, random.randint(1,6))
     elif command == '/time':
         bot.sendMessage(chat_id, str(datetime.datetime.now()))
-    elif command == '/temp':
-        output_message = "Here you have your temps and humidity values!\n"
-        # RPis temps
-        if not error_import:
-            list_temp = return_ALL_DHT_temp_humid()
-            temp_1="Sensor 1: {0:0.1f}*C%".format(list_temp[0][0])
-            temp_2="Sensor 2: {0:0.1f}*C%".format(list_temp[1][0])
-            output_message += temp_1 + "\n"
-            output_message += temp_2 + "\n"
-            #bot.sendMessage(chat_id, temp)
-        else:
-            #bot.sendMessage(chat_id, "RPI's sensors are not responding!")
-            output_message += "RPI's sensors are not responding!\n"
-            logging.info("RPI's sensors are not responding.")
-
-        # Netatmo temps!
-        output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp())
-        # send message outthere
-        bot.sendMessage(chat_id, output_message)
+    elif command == '/temp':    # /temp command
+        bot.sendMessage(chat_id, command_temp())
+    elif command == "/whereis":
+        bot.sendMessage(chat_id, command_whereis())
+    elif command == "/takepic":
+        bot.sendMessage(chat_id, command_takepic())
     else:
         bot.sendMessage(chat_id, "Sorry, I did not quite understand...")
 
