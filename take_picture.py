@@ -11,8 +11,7 @@ def take_1_pic():
 
 
 def path_to_pic():
-    return "imagename.jpg"
-    # return take_1_pic
+    return take_1_pic
 
 # testing
 # take_1_pic()
