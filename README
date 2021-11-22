@@ -1,0 +1,34 @@
+# My Pirois Telegram BoT
+
+This is a simple Telegram BoT that I coded myself with commands I find useful for me.
+
+## Description
+
+Pirois Telegram BoT uses Telegram BoTFather. I coded some funciontions that I felt useful for educational and learning purposes only.
+
+## Getting Started
+
+### Dependencies
+
+### Installing
+
+### Executing program
+
+```
+python3 telegram_bot.py
+```
+
+## Help
+
+```
+/help
+```
+
+## Authors
+
+just myself... :)
+
+## Version History
+
+* 0.1
+    * Initial Release
