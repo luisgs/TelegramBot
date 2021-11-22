@@ -38,9 +38,6 @@ def return_ALL_DHT_temp_humid():
         return list_dht_values
 
 
-
-
-
 """
 humidity_1, temperature_1 = 0, 0
 humidity_2, temperature_2 = 0, 0
