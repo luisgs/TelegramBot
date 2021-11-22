@@ -20,7 +20,7 @@ except (ModuleNotFoundError, ImportError) as error:
     logging.exception("Import Adafruit_DHT has failed! %s", error)
 
 import temp_netatmo
-
+import take_picture
 
 """
     TELEGRAM BoT (powered by Telebot)
@@ -33,7 +33,7 @@ command_not_found = ['This command does not exist!']
 command_under_maintenance = ['This command is still under some developtment', 'Command not yet fully operational!']
 
 """
-    Definition of all our commands
+    Functions for our commands
 """
 # /temp returns DHT and Netatmo temperature values.
 def command_temp():
@@ -62,8 +62,16 @@ def command_whereis():
     return random.choice(command_under_maintenance)
 
 # /takepic sends a pic taken from our webcamera
-def command_takepic():
+def command_takepic(chat_id):
+    message = "Here you have your image!"
+    bot.sendMessage(chat_id, message)
+    bot.sendPhoto(chat_id, photo=open(take_picture.path_to_pic(), 'rb'))
+
+
+def command_torrent(args):
     return random.choice(command_under_maintenance)
+
+
 
 """
     Handle function!
@@ -71,7 +79,8 @@ def command_takepic():
 # handle. finds and execute a command msg from client.
 def handle(msg):
     chat_id = msg['chat']['id']
-    command = msg['text']
+    command = msg['text'].split()[0]    # we split text and take first value
+    args = msg['text'].split()[1:]      # list of arguments -first element
 
     logging.info('Got command: %s' % command)
 
@@ -84,9 +93,12 @@ def handle(msg):
     elif command == "/whereis":
         bot.sendMessage(chat_id, command_whereis())
     elif command == "/takepic":
-        bot.sendMessage(chat_id, command_takepic())
+        command_takepic(chat_id)
+    elif command == "/torrent":
+        bot.sendMessage(chat_id,  command_torrent(args))
     else:
         bot.sendMessage(chat_id, "Sorry, I did not quite understand...")
+
 
 bot = telepot.Bot(variables.token_bot_api)
 
