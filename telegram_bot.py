@@ -99,10 +99,14 @@ def handle(msg):
     else:
         bot.sendMessage(chat_id, "Sorry, I did not quite understand...")
 
-
+"""
+    Connecting to BoT!
+"""
 bot = telepot.Bot(variables.token_bot_api)
 
-
+"""
+    Bot is booted and welcome message!
+"""
 # Welcome message! we just started up!
 bot.sendMessage(variables.bot_chat_id, "Hi there! Im all awake!")
 
