@@ -14,9 +14,9 @@ import variables
 # RPI temperatures functions
 error_import = False
 try:
-    error_import = True
     from humidity import return_ALL_DHT_temp_humid
 except (ModuleNotFoundError, ImportError) as error:
+    error_import = True
     logging.exception("Import Adafruit_DHT has failed! %s", error)
 
 import temp_netatmo
@@ -39,20 +39,19 @@ command_under_maintenance = ['This command is still under some developtment', 'C
 def command_temp():
     output_message = "Here you have your temps and humidity values!\n"
     # RPis temps
-    if not error_import:
-        list_temp = return_ALL_DHT_temp_humid()
-        temp_1="Sensor 1: {0:0.1f}*C%".format(list_temp[0][0])
-        temp_2="Sensor 2: {0:0.1f}*C%".format(list_temp[1][0])
-        output_message += temp_1 + "\n"
-        output_message += temp_2 + "\n"
-        #bot.sendMessage(chat_id, temp)
-    else:
+    if error_import:
         #bot.sendMessage(chat_id, "RPI's sensors are not responding!")
         output_message += "RPI's sensors are not responding!\n"
         logging.info("RPI's sensors are not responding.")
-
+    else:
+        list_temp = return_ALL_DHT_temp_humid()
+        temp_1="Sensor 1: {0:0.1f}_C and {0:0.1f}% humidity".format(list_temp[0][0],list_temp[0][1])
+        temp_2="Sensor 2: {0:0.1f}_C and {0:0.1f}% humidity".format(list_temp[1][0],list_temp[1][1])
+        output_message += temp_1 + "\n"
+        output_message += temp_2 + "\n"
+        #bot.sendMessage(chat_id, temp)
     # Netatmo temps!
-    output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp())
+    output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp() + "_C")
     # send message outthere
     return output_message
 

@@ -3,9 +3,9 @@ import sys, logging
 
 error_import = False
 try:
-    error_import = True
     import Adafruit_DHT
 except (ModuleNotFoundError, ImportError) as error:
+    error_import = True
     logging.exception("Import Adafruit_DHT has failed! %s", error)
 
 
@@ -27,12 +27,14 @@ def return_DHT_sensor_info(DHT_PIN):
 def return_ALL_DHT_temp_humid():
     list_dht_values = []
     if error_import:
+        logging.error("Error importing Adafruit!")
         return list_dht_values
     else:
         for index, DHT_PIN in enumerate(list_DHT_PIN):
             hum, temp = return_DHT_sensor_info(DHT_PIN)
             if ((hum is not None) and (temp is not None)):
                 logging.info("{0}: Temp_{0}={1:0.1f}*C  Humidity_{0}={2:0.1f}%".format(index, temp, hum))
+                list_dht_values.append([temp, hum])
             else:
                 logging.error("Failed to retrieve data from humidity sensor")
         return list_dht_values
