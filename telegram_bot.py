@@ -4,6 +4,7 @@ import datetime
 import telepot
 from telepot.loop import MessageLoop
 import sys, logging
+import os
 # import urllib2
 
 # Logging as output logging messages.
