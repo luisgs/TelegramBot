@@ -95,6 +95,7 @@ def command_status(args):
     ip = requests.get('https://api.ipify.org').content.decode('utf8')
     output_message += 'My public IP address is: {}'.format(ip)
 
+    return output_message
 
 
 
