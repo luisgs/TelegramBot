@@ -105,6 +105,7 @@ list_commands = {"/roll": "Roll dice returns a random number between 1 and 6",
                 "/whereis": "Return exact GPS location of your clients",
                 "/takepic": "Return a picture taken from your RPI's webcam",
                 "/torrent": "Adds your torren into our torrent client.",
+                "/status": "Returns some important services' status as well as public RPI's IP address.",
                 "/help": "Returns help about all possible commands that are configured"
 }
 
@@ -140,6 +141,8 @@ def handle(msg):
         command_takepic(chat_id)
     elif command == "/torrent":
         bot.sendMessage(chat_id,  command_torrent(args))
+    elif command == "/status":
+        bot.sendMessage(chat_id,  command_status(args))
     elif command == "/help":
         bot.sendMessage(chat_id,  command_help(args))
     else:
