@@ -85,11 +85,13 @@ def command_status(args):
     # if status == 0 -> it is running
     # eoc. it is NOT running
     for service in list_services:
-        status = os.system('ps aux | grep ' + service + ' | grep -v grep | wc -l')
-        if status==0:  # Service is running!
+        status = os.system('systemctl is-active --quiet ' + service)
+        if (status==0):  # Service is running!
             output_message += service + " is running!\n"
+            logging.info(service + "is running!")
         else:
             output_message += service + " is NOT running!\n"
+            logging.info(service + "is NOT running!")
 
     # External IP Address!
     ip = requests.get('https://api.ipify.org').content.decode('utf8')
