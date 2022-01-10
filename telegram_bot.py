@@ -92,7 +92,7 @@ def command_status(args):
             output_message += service + " is NOT running!\n"
 
     # External IP Address!
-    ip = get('https://api.ipify.org').content.decode('utf8')
+    ip = requests.get('https://api.ipify.org').content.decode('utf8')
     output_message += 'My public IP address is: {}'.format(ip)
 
 
