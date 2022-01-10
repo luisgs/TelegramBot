@@ -86,7 +86,7 @@ def command_status(args):
     # eoc. it is NOT running
     for service in list_services:
         status = os.system('ps aux | grep ' + service + ' | grep -v grep | wc -l')
-        if not status:  # Service is running!
+        if status==0:  # Service is running!
             output_message += service + " is running!\n"
         else:
             output_message += service + " is NOT running!\n"
