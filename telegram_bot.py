@@ -46,13 +46,13 @@ def command_temp():
         logging.info("RPI's sensors are not responding.")
     else:
         list_temp = return_ALL_DHT_temp_humid()
-        temp_1="Sensor 1: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[0][0],list_temp[0][1])
-        temp_2="Sensor 2: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[1][0],list_temp[1][1])
+        temp_1="Sensor INTERNO: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[0][0],list_temp[0][1])
+        temp_2="Sensor EXTERNO: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[1][0],list_temp[1][1])
         output_message += temp_1 + "\n"
         output_message += temp_2 + "\n"
         #bot.sendMessage(chat_id, temp)
     # Netatmo temps!
-    output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp() + "_C")
+    output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp()) + "_C"
     # send message outthere
     return output_message
 
