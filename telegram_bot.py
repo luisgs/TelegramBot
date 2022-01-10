@@ -4,6 +4,7 @@ import datetime
 import telepot
 from telepot.loop import MessageLoop
 import sys, logging
+# import urllib2
 
 # Logging as output logging messages.
 logging.basicConfig(stream=sys.stderr, level=logging.INFO)
@@ -71,6 +72,29 @@ def command_takepic(chat_id):
 # COMMENT: ACCEPT torrent file or torrent's URL and add it to Torrent Client.
 def command_torrent(args):
     return random.choice(command_under_maintenance)
+
+
+# COMMAND: /status
+# COMMENT: RETURN status of a serie of services.
+# RETURN: String with status of services
+def command_status(args):
+    list_services = ["telegram_bot", "prometheus", "transmission-daemon"]
+    #flexget, noip2
+    output_message = "Here is the status of our services along with additional info:\n"
+    # if status == 0 -> it is running
+    # eoc. it is NOT running
+    for service in list_services:
+        status = os.system('ps aux | grep ' + service + ' | grep -v grep | wc -l')
+        if not status:  # Service is running!
+            output_message += service + " is running!\n"
+        else:
+            output_message += service + " is NOT running!\n"
+
+    # External IP Address!
+    ip = get('https://api.ipify.org').content.decode('utf8')
+    output_message += 'My public IP address is: {}'.format(ip)
+
+
 
 
 # List of developed commands.
