@@ -32,6 +32,7 @@ import take_picture
 command_not_found = ['This command does not exist!']
 command_under_maintenance = ['This command is still under some developtment', 'Command not yet fully operational!']
 
+
 """
     Functions for our commands
 """
@@ -45,8 +46,8 @@ def command_temp():
         logging.info("RPI's sensors are not responding.")
     else:
         list_temp = return_ALL_DHT_temp_humid()
-        temp_1="Sensor 1: {0:0.1f}_C and {0:0.1f}% humidity".format(list_temp[0][0],list_temp[0][1])
-        temp_2="Sensor 2: {0:0.1f}_C and {0:0.1f}% humidity".format(list_temp[1][0],list_temp[1][1])
+        temp_1="Sensor 1: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[0][0],list_temp[0][1])
+        temp_2="Sensor 2: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[1][0],list_temp[1][1])
         output_message += temp_1 + "\n"
         output_message += temp_2 + "\n"
         #bot.sendMessage(chat_id, temp)
@@ -66,11 +67,31 @@ def command_takepic(chat_id):
     bot.sendMessage(chat_id, message)
     bot.sendPhoto(chat_id, photo=open(take_picture.path_to_pic(), 'rb'))
 
-
+# COMMAND: /torrent
+# COMMENT: ACCEPT torrent file or torrent's URL and add it to Torrent Client.
 def command_torrent(args):
     return random.choice(command_under_maintenance)
 
 
+# List of developed commands.
+# list_commands = [(command_ID, ["command_string", "definition_explantion"])]
+list_commands = {"/roll": "Roll dice returns a random number between 1 and 6",
+                "/time": "Returns date and time.",
+                "/temp": "Returns temperature and humidity values from our DHT and Netatmo sensors.",
+                "/whereis": "Return exact GPS location of your clients",
+                "/takepic": "Return a picture taken from your RPI's webcam",
+                "/torrent": "Adds your torren into our torrent client.",
+                "/help": "Returns help about all possible commands that are configured"
+}
+
+# COMMAND: /help
+# COMMENT: RETURN all possible commands that are available.
+# RETURN: String with commands and comments.
+def command_help(args):
+    output_message = "Here are all our configured commmands! Hope that you enjoy!\n"
+    for command_key, comments in list_commands.items():
+            output_message += command_key + "\t" + comments + "\n"
+    return output_message
 
 """
     Handle function!
@@ -95,8 +116,11 @@ def handle(msg):
         command_takepic(chat_id)
     elif command == "/torrent":
         bot.sendMessage(chat_id,  command_torrent(args))
+    elif command == "/help":
+        bot.sendMessage(chat_id,  command_help(args))
     else:
         bot.sendMessage(chat_id, "Sorry, I did not quite understand...")
+        bot.sendMessage(chat_id,  command_help(args))
 
 """
     Connecting to BoT!
