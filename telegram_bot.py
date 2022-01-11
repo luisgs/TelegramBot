@@ -62,7 +62,7 @@ def command_temp():
 # /whereis return GPS location of a person. person ID is hard coded
 def command_whereis():
     output_message = "Here are your device:\n"
-    latitude, longitude = device_lat_long(variables.traccar_mydevice)
+    latitude, longitude = device_location_traccar.device_lat_long(variables.traccar_mydevice)
 
     output_message += "Latitude: " + latitude + "\n"
     output_message += "Longitude: " + longitude + "\n"
