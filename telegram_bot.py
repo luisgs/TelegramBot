@@ -69,7 +69,7 @@ def command_whereis():
 
     # Create location image:
     base_url = "https://www.mapquestapi.com/staticmap/v4/getplacemap?"
-    key = "key=" + osm_api
+    key = "key=" + variables.osm_api
     location = "&location=" + str(latitude) + "," + str(longitude) + "&size=600,300&type=map&zoom=16&imagetype=jpeg&scalebar=true&scalebarPos=top&showicon=mcenter"
 
     output_message += "Here is a link: \n"
