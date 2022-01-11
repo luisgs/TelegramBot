@@ -32,12 +32,12 @@ def device_lat_long(mydevice):
             logging.info("Geofences:" + str(data.geofences))
             logging.info("Events:" + str(data.events))
 
-
             if mydevice in data.device_info:
                 latitude = data.device_info[mydevice]['latitude']
                 longitude = data.device_info[mydevice]['longitude']
 
-
+    LOOP = asyncio.new_event_loop()
+    asyncio.set_event_loop(LOOP)
     LOOP = asyncio.get_event_loop()
     LOOP.run_until_complete(test())
     logging.info("Device latitude: " + (str(latitude)))
@@ -46,4 +46,4 @@ def device_lat_long(mydevice):
     return latitude, longitude
 
 
-# print("This are some values" + str(device_lat_long(device)))
+print("This are some values" + str(device_lat_long(device)))
