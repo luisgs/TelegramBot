@@ -23,6 +23,7 @@ except (ModuleNotFoundError, ImportError) as error:
 
 import temp_netatmo
 import take_picture
+import device_location_traccar
 
 """
     TELEGRAM BoT (powered by Telebot)
@@ -60,8 +61,21 @@ def command_temp():
 
 # /whereis return GPS location of a person. person ID is hard coded
 def command_whereis():
-    output_message = "Here are they:\n"
-    return random.choice(command_under_maintenance)
+    output_message = "Here are your device:\n"
+    latitude, longitude = device_lat_long(variables.traccar_mydevice)
+
+    output_message += "Latitude: " + latitude + "\n"
+    output_message += "Longitude: " + longitude + "\n"
+
+    # Create location image:
+    base_url = "https://www.mapquestapi.com/staticmap/v4/getplacemap?"
+    key = "key=" + osm_api
+    location = "&location=" + latitude + "," + longitude + "&size=600,300&type=map&zoom=16&imagetype=jpeg&scalebar=true&scalebarPos=top&showicon=mcenter"
+
+    output_message += "Here is a link: \n"
+    output_message += base_url + key + location
+
+    return output_message
 
 # /takepic sends a pic taken from our webcamera
 def command_takepic(chat_id):
