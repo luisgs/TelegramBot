@@ -64,8 +64,8 @@ def command_whereis():
     output_message = "Here are your device:\n"
     latitude, longitude = device_location_traccar.device_lat_long(variables.traccar_mydevice)
 
-    output_message += "Latitude: " + latitude + "\n"
-    output_message += "Longitude: " + longitude + "\n"
+    output_message += "Latitude: " + str(latitude) + "\n"
+    output_message += "Longitude: " + str(longitude) + "\n"
 
     # Create location image:
     base_url = "https://www.mapquestapi.com/staticmap/v4/getplacemap?"
