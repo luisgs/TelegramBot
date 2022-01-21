@@ -32,8 +32,18 @@ import device_location_traccar
 """
     Definition of our MESSAGES
 """
-command_not_found = ['This command does not exist!']
-command_under_maintenance = ['This command is still under some developtment', 'Command not yet fully operational!']
+# BoT booted up!
+welcome_messages = ['Hi, How can I help you!',
+                    'Hi, Im all awake and ready for you!',
+                    'I was taking a nap but now Im ready, tell me!?']
+# Command not found
+command_not_found = ['This command does not exist!',
+                    'Sorry, this command is... different, try again!',
+                    'No idea what command this one is... try again']
+command_under_maintenance = ['This command is still under some developtment',
+                    'Command not yet fully operational!',
+                    'Im still working on this one... give me sometime!',
+                    'try again in a couple of weeks, it will be done by then ;)']
 
 
 """
@@ -79,7 +89,7 @@ def command_whereis():
 
 # /takepic sends a pic taken from our webcamera
 def command_takepic(chat_id):
-    message = "Here you have your image!"
+    message = "Let me take a picture for you. It might take a bit..."
     bot.sendMessage(chat_id, message)
     bot.sendPhoto(chat_id, photo=open(take_picture.path_to_pic(), 'rb'))
 
@@ -136,6 +146,10 @@ def command_help(args):
             output_message += command_key + "\t" + comments + "\n"
     return output_message
 
+""
+def getting_message_time(message):
+    bot.reply_to(message, message.date)
+
 """
     Handle function!
 """
@@ -143,7 +157,7 @@ def command_help(args):
 def handle(msg):
     chat_id = msg['chat']['id']
     command = msg['text'].split()[0]    # we split text and take first value
-    args = msg['text'].split()[1:]      # list of arguments -first element
+    args = msg['text'].split()[1:]      # list of arguments - first element
 
     logging.info('Got command: %s' % command)
 
@@ -181,5 +195,5 @@ bot.sendMessage(variables.bot_chat_id, "Hi there! Im all awake!")
 MessageLoop(bot, handle).run_as_thread()
 logging.info('I am listening ...')
 
-while 1:
+while 1:        # we keep program on and listening
     time.sleep(10)
