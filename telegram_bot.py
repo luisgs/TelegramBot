@@ -146,9 +146,6 @@ def command_help(args):
             output_message += command_key + "\t" + comments + "\n"
     return output_message
 
-""
-def getting_message_time(message):
-    bot.reply_to(message, message.date)
 
 """
     Handle function!
@@ -158,8 +155,12 @@ def handle(msg):
     chat_id = msg['chat']['id']
     command = msg['text'].split()[0]    # we split text and take first value
     args = msg['text'].split()[1:]      # list of arguments - first element
+    booting_time = time.time()          # TeleBot booting EPOCH time!
 
-    logging.info('Got command: %s' % command)
+    # older messages will be deleted!
+    if int(msg['date']) < int(booting_time):
+        logging.info("Deleting old messages...")
+        return
 
     if command == '/roll':
         bot.sendMessage(chat_id, random.randint(1,6))
@@ -178,7 +179,7 @@ def handle(msg):
     elif command == "/help":
         bot.sendMessage(chat_id,  command_help(args))
     else:
-        bot.sendMessage(chat_id, "Sorry, I did not quite understand...")
+        bot.sendMessage(chat_id, random.choice(command_not_found))
         bot.sendMessage(chat_id,  command_help(args))
 
 """
@@ -190,7 +191,7 @@ bot = telepot.Bot(variables.token_bot_api)
     Bot is booted and welcome message!
 """
 # Welcome message! we just started up!
-bot.sendMessage(variables.bot_chat_id, "Hi there! Im all awake!")
+bot.sendMessage(variables.bot_chat_id, random.choice(welcome_messages))
 
 MessageLoop(bot, handle).run_as_thread()
 logging.info('I am listening ...')
