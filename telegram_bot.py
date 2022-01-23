@@ -59,13 +59,20 @@ def command_temp():
         logging.info("RPI's sensors are not responding.")
     else:
         list_temp = return_ALL_DHT_temp_humid()
-        temp_1="Sensor INTERNO: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[0][0],list_temp[0][1])
-        temp_2="Sensor EXTERNO: {0:0.1f}_C and {1:0.1f}% humidity".format(list_temp[1][0],list_temp[1][1])
+        temp_1="Sensor INTERNO: {0:0.1f}°C and {1:0.1f}% humidity".format(list_temp[0][0],list_temp[0][1])
+        temp_2="Sensor EXTERNO: {0:0.1f}°C and {1:0.1f}% humidity".format(list_temp[1][0],list_temp[1][1])
         output_message += temp_1 + "\n"
         output_message += temp_2 + "\n"
         #bot.sendMessage(chat_id, temp)
     # Netatmo temps!
-    output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp()) + "_C"
+    output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp()) + "°C"
+
+    # Cities' temperatures:
+    cities = ['Madrid', 'London']
+    for city in cities:
+        request = requests.get('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + variables.openwaether_api)
+        weather = request.json
+        logging.info("Current Temp at " + city + "is: " + str(int(weather['main']['temp'])-273.15) + " Celsius")
     # send message outthere
     return output_message
 
