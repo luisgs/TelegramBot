@@ -134,6 +134,7 @@ list_commands = {"/roll": "Roll dice returns a random number between 1 and 6",
                 "/takepic": "Return a picture taken from your RPI's webcam",
                 "/torrent": "Adds your torren into our torrent client.",
                 "/status": "Returns some important services' status as well as public RPI's IP address.",
+                "/random": "Select a command among all configured and possible commands",
                 "/help": "Returns help about all possible commands that are configured"
 }
 
@@ -153,7 +154,7 @@ def command_help(args):
 # handle. finds and execute a command msg from client.
 def handle(msg):
     chat_id = msg['chat']['id']
-    command = msg['text'].split()[0]    # we split text and take first value
+    command = msg['text'].split()[0]    # we split text and take command value
     args = msg['text'].split()[1:]      # list of arguments - first element
     booting_time = time.time()          # TeleBot booting EPOCH time!
 
@@ -176,6 +177,12 @@ def handle(msg):
         bot.sendMessage(chat_id,  command_torrent(args))
     elif command == "/status":
         bot.sendMessage(chat_id,  command_status(args))
+    elif command == '/random':
+        r_command = random.choice(list(list_commands))
+        bot.sendMessage(chat_id,  "We selected " + r_command)
+        new_msg = msg
+        new_msg['text'] = r_command
+        bot.sendMessage(chat_id, handle(new_msg))
     elif command == "/help":
         bot.sendMessage(chat_id,  command_help(args))
     else:
