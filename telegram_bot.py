@@ -68,11 +68,14 @@ def command_temp():
     output_message += "NETATMO: " + str(temp_netatmo.netatmo_room_temp()) + "°C"
 
     # Cities' temperatures:
-    cities = ['Madrid', 'London']
+    cities = ['Madrid', 'Prague']
     for city in cities:
         request = requests.get('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + variables.openwaether_api)
-        weather = request.json
-        logging.info("Current Temp at " + city + "is: " + str(int(weather['main']['temp'])-273.15) + " Celsius")
+        weather = request.json()
+#        logging.info("Current Temp at " + city + "is: " + str(weather['main']['temp']-273) + " Celsius")
+        output_message += "Temperature in " + city + " is: " + str(round(weather['main']['temp'] - 273.15,1)) + ", and real feel is: " + str(round(weather['main']['feels_like'] - 273.15, 1)) + "\n"
+        logging.info("Temperature in" + city + " is " + str(round(weather['main']['temp'] - 273.15,1)))
+
     # send message outthere
     return output_message
 
