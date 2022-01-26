@@ -73,8 +73,8 @@ def command_temp():
         request = requests.get('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + variables.openwaether_api)
         weather = request.json()
 #        logging.info("Current Temp at " + city + "is: " + str(weather['main']['temp']-273) + " Celsius")
-        output_message += "Temperature in " + city + " : " + str(round(weather['main']['temp'] - 273.15,1)) + "°C, real feel: " + str(round(weather['main']['feels_like'] - 273.15, 1)) + "°C\n"
-        logging.info("Temperature in" + city + " is " + str(round(weather['main']['temp'] - 273.15,1)))
+        output_message += "Temperature in " + city + ": " + str(round(weather['main']['temp'] - 273.15,1)) + "°C, real feel: " + str(round(weather['main']['feels_like'] - 273.15, 1)) + "°C\n"
+        logging.info("Temperature in " + city + " is " + str(round(weather['main']['temp'] - 273.15,1)))
 
     # send message outthere
     return output_message
