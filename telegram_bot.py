@@ -8,13 +8,12 @@ import logging
 import os
 import requests
 # import urllib2
+# all our PERSONAL variables are stored in here
+import variables
 
 # Logging as output logging messages.
 logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
-
-# all our PERSONAL variables are stored in here
-import variables
 
 # RPI temperatures functions
 error_import = False
@@ -93,6 +92,7 @@ def command_temp():
     # send message outthere
     return output_message
 
+
 # /whereis return GPS location of a person. person ID is hard coded
 def command_whereis():
     output_message = "Here are your device:\n"
@@ -104,7 +104,11 @@ def command_whereis():
     # Create location image:
     base_url = "https://www.mapquestapi.com/staticmap/v4/getplacemap?"
     key = "key=" + variables.osm_api
-    location = "&location=" + str(latitude) + "," + str(longitude) + "&size=600,300&type=map&zoom=16&imagetype=jpeg&scalebar=true&scalebarPos=top&showicon=mcenter"
+    location = "&location="\
+               + str(latitude)\
+               + ","\
+               + str(longitude)\
+               + "&size=600,300&type=map&zoom=16&imagetype=jpeg&scalebar=true&scalebarPos=top&showicon=mcenter"
 
     output_message += "Here is a link: \n"
     output_message += base_url + key + location
