@@ -1,34 +1,32 @@
-# My Pirois Telegram BoT
+# Pirois Telegram BoT
 
-This is a simple Telegram BoT that I coded myself with commands I find useful for me.
+Priroir is a Telegram BoT written purely in Python.
 
-## Description
+## Installation
 
-Pirois Telegram BoT uses Telegram BoTFather. I coded some funciontions that I felt useful for educational and learning purposes only.
+Download this [project](https://codeload.github.com/luisgs/TelegramBot/zip/refs/heads/master)
 
-## Getting Started
 
-### Dependencies
+## Usage
 
-### Installing
-
-### Executing program
-
-```
+```bash
 python3 telegram_bot.py
 ```
 
-## Help
+## Requirements
+Update your variables.py file with your entries.
+Install all required packages.
 
-```
-/help
-```
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
 
 ## Authors
-
-just myself... :)
+Just myself... :)
 
 ## Version History
-
 * 0.1
     * Initial Release
+
+## License
