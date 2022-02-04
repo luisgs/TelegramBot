@@ -2,7 +2,8 @@
 import asyncio
 import aiohttp
 from pytraccar.api import API
-import sys, logging
+import sys
+import logging
 # all our PERSONAL variables are stored in here
 import variables
 
@@ -10,12 +11,13 @@ logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 
 HOST = variables.traccar_host
-PORT =  variables.traccar_port
-USERNAME =  variables.traccar_username
-PASSWORD =  variables.traccar_password
+PORT = variables.traccar_port
+USERNAME = variables.traccar_username
+PASSWORD = variables.traccar_password
 
 device = variables.traccar_mydevice
 latitude, longitude = 0, 0
+
 
 def device_lat_long(mydevice):
     async def test():
@@ -27,7 +29,7 @@ def device_lat_long(mydevice):
             await data.get_events([2])
 
             logging.info("Device_info:" + str(data.device_info))
-            logging.info("Positions:" +  str(data.positions))
+            logging.info("Positions:" + str(data.positions))
             logging.info("Devices:" + str(data.devices))
             logging.info("Geofences:" + str(data.geofences))
             logging.info("Events:" + str(data.events))

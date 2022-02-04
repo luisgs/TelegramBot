@@ -4,6 +4,7 @@ import os
 
 download_dir = "/home/osmc/Pictures/webcam/"
 
+
 def take_1_pic():
     now = datetime.now()
     path_to_pic = download_dir + now.strftime("%d%m%y_%H%M%S") + ".jpg"
