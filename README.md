@@ -45,7 +45,7 @@ Just myself... :)
 
 ## License
 
-license
+License
 
 
 This README file was done via: https://www.makeareadme.com/
