@@ -1,0 +1,6 @@
+Adafruit_DHT==1.4.0
+aiohttp==3.7.4.post0
+pytraccar==0.10.0
+requests==2.26.0
+telepot==12.7
+transmission_rpc==3.3.0
