@@ -22,12 +22,12 @@ python3 telegram_bot.py
 VERY IMPORTANT! After you download our project file, update your variables.py file with all required information.
 
 Install required packages that can be found in 'requirements.txt' file:
-  Adafruit_DHT==1.4.0
-  aiohttp==3.7.4.post0
-  pytraccar==0.10.0
-  requests==2.26.0
-  telepot==12.7
-  transmission_rpc==3.3.0
+- Adafruit_DHT==1.4.0
+- aiohttp==3.7.4.post0
+- pytraccar==0.10.0
+- requests==2.26.0
+- telepot==12.7
+- transmission_rpc==3.3.0
 
 ## Contributing
 
