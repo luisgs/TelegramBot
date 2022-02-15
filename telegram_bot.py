@@ -238,3 +238,6 @@ logging.info('I am listening ...')
 
 while 1:        # we keep program on and listening
     time.sleep(10)
+    bot.sendMessage(variables.bot_chat_id,
+                    random.choice(command_takepic(variables.bot_chat_id),
+                                  command_temp()))

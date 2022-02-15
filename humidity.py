@@ -27,7 +27,7 @@ def return_DHT_sensor_info(DHT_PIN):
 
 
 def return_ALL_DHT_temp_humid():
-    list_dht_values = []
+    list_dht_values = [[0.0, 0.0][0.0, 0.0]]
     if error_import:
         logging.error("Error importing Adafruit!")
         return list_dht_values
@@ -36,7 +36,8 @@ def return_ALL_DHT_temp_humid():
             hum, temp = return_DHT_sensor_info(DHT_PIN)
             if ((hum is not None) and (temp is not None)):
                 logging.info("{0}: Temp_{0}={1:0.1f}*C  Humidity_{0}={2:0.1f}%".format(index, temp, hum))
-                list_dht_values.append([round(temp, 1), round(hum, 1)])
+                # list_dht_values.append([round(temp, 1), round(hum, 1)])
+                list_dht_values[index] = [round(temp, 1), round(hum, 1)]
             else:
                 logging.error("Failed to retrieve data from humidity sensor")
         return list_dht_values
