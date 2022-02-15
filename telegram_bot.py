@@ -11,6 +11,10 @@ import requests
 # all our PERSONAL variables are stored in here
 import variables
 
+import temp_netatmo
+import take_picture
+import device_location_traccar
+
 # Logging as output logging messages.
 logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
@@ -22,10 +26,6 @@ try:
 except (ModuleNotFoundError, ImportError) as error:
     error_import = True
     logging.exception("Import Adafruit_DHT has failed! %s", error)
-
-import temp_netatmo
-import take_picture
-import device_location_traccar
 
 """
     TELEGRAM BoT (powered by Telebot)
@@ -171,7 +171,7 @@ list_commands = {"/roll": "Roll dice returns a random number between 1 and 6",
 # COMMAND: /help
 # COMMENT: RETURN all possible commands that are available.
 # RETURN: String with commands and comments.
-def command_help(args):
+def command_help():
     output_message = "Here are all our configured commmands! Enjoy them!!\n"
     for command_key, comments in list_commands.items():
         output_message += command_key + "\t" + comments + "\n"
@@ -216,10 +216,10 @@ def handle(msg):
         new_msg['text'] = r_command
         bot.sendMessage(chat_id, handle(new_msg))
     elif command == "/help":
-        bot.sendMessage(chat_id,  command_help(args))
+        bot.sendMessage(chat_id,  command_help())
     else:
         bot.sendMessage(chat_id, random.choice(command_not_found))
-        bot.sendMessage(chat_id,  command_help(args))
+        bot.sendMessage(chat_id,  command_help())
 
 
 """
@@ -238,6 +238,7 @@ logging.info('I am listening ...')
 
 while 1:        # we keep program on and listening
     time.sleep(10)
-    bot.sendMessage(variables.bot_chat_id,
-                    random.choice(command_takepic(variables.bot_chat_id),
-                                  command_temp()))
+#   bot.sendMessage(variables.bot_chat_id,
+#                     random.choice(command_help()))
+#                    random.choice(command_takepic(variables.bot_chat_id),
+#                                  command_temp()))
